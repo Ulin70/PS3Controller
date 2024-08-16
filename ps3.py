@@ -1,0 +1,37 @@
+import pygame
+import sys
+
+# Inisialisasi pygame
+pygame.init()
+
+# Inisialisasi Joystick
+pygame.joystick.init()
+
+# Periksa apakah joystick terdeteksi
+if pygame.joystick.get_count() == 0:
+    print("Tidak ada joystick yang terdeteksi.")
+    sys.exit()
+
+# Pilih joystick pertama
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
+print(f"Joystick terdeteksi: {joystick.get_name()}")
+
+# Loop untuk menangkap event
+try:
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.JOYAXISMOTION:
+                print(f"Gerakan Axis: {event.axis}, Value: {event.value}")
+            elif event.type == pygame.JOYBUTTONDOWN:
+                print(f"Tombol ditekan: {event.button}")
+            elif event.type == pygame.JOYBUTTONUP:
+                print(f"Tombol dilepas: {event.button}")
+
+except KeyboardInterrupt:
+    print("Program dihentikan oleh pengguna.")
+
+finally:
+    # Bersihkan pygame
+    pygame.quit()
